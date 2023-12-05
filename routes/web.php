@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserAuthController;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,10 @@ use App\Http\Controllers\UserAuthController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get("/test", function () {
+    return Inertia::render('Test');
+});
 
 Route::get('/', function () {
     return view('index');
