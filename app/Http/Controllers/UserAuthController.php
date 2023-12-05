@@ -12,7 +12,7 @@ class UserAuthController extends Controller
     public function form() {
 
         if (Auth::check()) {
-            return redirect()->route('index');
+            return redirect(route('index'));
         }
 
         return view("auth.form");
@@ -33,7 +33,8 @@ class UserAuthController extends Controller
 
         return redirect()
                 ->route('auth.form')
-                ->withSuccess('You can now login with your registered credentials!');
+                ->with('msg',"You`re successfully registered!!!");
+                // ->withSuccess('You can now login with your registered credentials!');
     }
 
     public function login(Request $request)

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserAuthController;
-use Inertia\Inertia;
+use App\Http\Controllers\TodoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,17 +15,26 @@ use Inertia\Inertia;
 |
 */
 
-Route::get("/test", function () {
-    return Inertia::render('Test');
+// Route::controller(TodoController::class)->group(function () {
+//     Route::get('/', 'index')->name('index');
+// })->middleware(['auth']);
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::controller(TodoController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/storeTask', 'storeTask')->name('storeTask');
+        Route::post('/destroyTask', 'destroyTask')->name('destroyTask');
+        Route::get('/editTask', 'editTask')->name('editTask');
+        Route::put('/updateTask', 'updateTask')->name('UpdateTask');
+    });
+    
+    Route::controller(UserAuthController::class)->group(function () {
+        Route::post('/logout', 'logout')->name('auth.logout');
+    });
 });
 
-Route::get('/', function () {
-    return view('index');
-})->middleware(['auth'])->name('index');
-
 Route::controller(UserAuthController::class)->group(function() {
-    Route::get('/auth', 'form')->name('auth.form');
+    Route::get('/login', 'form')->name('auth.form');
     Route::post('/register', 'register_account')->name('auth.register');
     Route::post('/login', 'login')->name('auth.login');
-    Route::post('/logout', 'logout')->name('auth.logout');
 });

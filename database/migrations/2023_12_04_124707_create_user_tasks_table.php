@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('user_tasks', function (Blueprint $table) {
             $table->id();
             $table->uuid('user_id');   
-            $table->string('task_description')->nullable();
+            $table->string('category');
+            $table->string('task_description');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); 

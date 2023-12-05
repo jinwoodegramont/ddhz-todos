@@ -11,13 +11,16 @@
 </head>
 <body>
 
-    @if ($message = Session::get('success'))
+    @if ($message = Session::get('msg'))
       <!-- message berhasil register disini coy kalo mau pake, see UserAuthController register function -->
 
       <!-- css bodynya gabisa di override :( -->
-      <div style="position: static;">
+      {{-- <div style="position: static;">
         <h1 style="background-color: green;">{{$message}}</h1>
-      </div>
+      </div> --}}
+      <script>
+        alert('{{$message}}');
+      </script>
     @endif
 
     @if ($errors->any())
@@ -34,11 +37,7 @@
 <div class="wrapper">
     <span class="bg-animate"></span>
     <span class="bg-animate2"></span>
-
-
-
-  
-  <div class="form-box login">
+    <div class="form-box login">
     <h2 class="animation" style="--i:0; --j:21;">Login</h2>
     <form action="{{ route('auth.login') }}" method="post">
       @csrf
@@ -55,13 +54,13 @@
       </div>
       <button type="submit" class="btn animation" style="--i:3; --j:24;">Login</button>
       <div class="logreg-link animation" style="--i:4; --j:25;">
-        <p>Don,t have an account? <a href="#" class="register-link">Sign Up</a></p>
+        <p>Don't have an account? <a href="#" class="register-link">Sign Up</a></p>
       </div>
     </form>
   </div>
     <div class="info-text login">
-      <h2 class="animation" style="--i:0; --j:20;">Welcome Back</h2>
-      <p class="animation" style="--i:1; --j:21;">Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+      <h2 class="animation" style="--i:0; --j:20;">DDHZ Todos</h2>
+      <p class="animation" style="--i:1; --j:21;">Let's list your tasks!</p>
     </div>
 
 
@@ -93,8 +92,8 @@
     </div>
 
     <div class="info-text register">
-      <h2 class="animation" style="--i:17; --j:0;">Welcome Back</h2>
-      <p class="animation" style="--i:18; --j:1;">Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+      <h2 class="animation" style="--i:17; --j:0;">Register Now!</h2>
+      <p class="animation" style="--i:18; --j:1;">Can't Waiting for you 😀</p>
     </div>
 </div>
 
