@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OTPController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\TodoController;
@@ -35,6 +36,11 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::controller(UserAuthController::class)->group(function() {
     Route::get('/login', 'form')->name('auth.form');
-    Route::post('/register', 'register_account')->name('auth.register');
+    Route::post('/register', 'register_account')->name('auth.register'); //also send otp
     Route::post('/login', 'login')->name('auth.login');
+});
+
+Route::controller(OTPController::class)->group(function() {
+    Route::get('/register/AccountActivation', 'index')->name('auth.AccountActivation');
+    Route::post('/register/validatingOTP', 'validatingOTP')->name('auth.validatingOTP');
 });

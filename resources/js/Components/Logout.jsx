@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Logout(props) {
   return (
-    <div className='flex justify-between px-5 bg-gray-300 items-center'>
+    <div className='flex justify-between px-5 bg-sky-300 items-center'>
       <div>
         <h1>DDHZ</h1>
       </div>

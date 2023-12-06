@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AccountActivation;
 
 class UserAuthController extends Controller
 {
@@ -19,22 +22,48 @@ class UserAuthController extends Controller
     }
     public function register_account(Request $request) {
 
-        $request->validate([
+        $d = $request->validate([
             'username' => 'required|alpha_dash:ascii|min:4|max:32|unique:users',
-            'email'=> 'required|email|max:100|unique:users',
+            'email'=> 'required|email|max:100|unique:users|ends_with:gmail.com',
             'password' => 'required|min:8|max:32'
         ]);
 
-        User::create([
+        
+        // User::create([
+            //     'username'=> $request->username,
+            //     'email' => $request->email,
+            //     'password' => Hash::make($request->password),
+            // ]);
+            // return redirect()
+            //         ->route('auth.form')
+            //         ->with('msg',"You`re successfully registered!!!");
+            // ->withSuccess('You can now login with your registered credentials!');
+        
+        $d = [
             'username'=> $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+            'password' => Hash::make($request->password)
+        ];
 
-        return redirect()
-                ->route('auth.form')
-                ->with('msg',"You`re successfully registered!!!");
-                // ->withSuccess('You can now login with your registered credentials!');
+        // session for otp and datauser that need activation
+        $otpCode = substr((rand()%2+rand()), 0, 6);
+
+        Session::put('otpKey',$otpCode);
+
+        Session::put('stackData', $d);
+
+        //sending email
+        // Mail::to($request->data['email'])->send(new AccountActivation($otpCode));
+        $mailData = [
+            'title' => "OTP Code",
+            'body'=> 'Your code : '.$otpCode,            
+        ]; 
+
+        // dd($request->email);
+
+        Mail::to($request->email)->send(new AccountActivation($mailData));
+
+        return redirect()->route('auth.AccountActivation');
     }
 
     public function login(Request $request)

@@ -67,8 +67,8 @@
     <div class="form-box register">
       <h2 class="animation" style="--i:17; --j:0;">Sign Up</h2>
       <form action="{{ route('auth.register') }}" method="post">
-        @csrf
-
+        @csrf 
+        @method('post')
         <div class="input-box animation" style="--i:18; --j:1;">
           <input type="text" name="username" required>
           <label>Username</label>
