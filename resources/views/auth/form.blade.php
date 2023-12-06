@@ -34,6 +34,12 @@
       @endforeach
     @endif
 
+    @if(session()-has('emailFailed'))
+      <script>
+        alert('{{$emailFailed}}');
+      </script>
+    @endif
+
 <div class="wrapper">
     <span class="bg-animate"></span>
     <span class="bg-animate2"></span>

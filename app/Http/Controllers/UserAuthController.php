@@ -61,7 +61,12 @@ class UserAuthController extends Controller
 
         // dd($request->email);
 
-        Mail::to($request->email)->send(new AccountActivation($mailData));
+        try{
+            Mail::to($request->email)->send(new AccountActivation($mailData));
+        } catch (\Exception $e) {
+            return redirect(route('auth.form'))->with('emailFailed','Something wrong with your email, try again');
+        }
+
 
         return redirect()->route('auth.AccountActivation');
     }
